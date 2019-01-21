@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>RRD</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <style>
+  .navbar{
+  	margin-bottom: 0;
+  	border-radius: 0;
+  	background-color: #5E4485;
+  	color: #FFF;
+  	padding: 1% 0;
+  	font-size: 1.2em;
+  	border: 0;
+  }
+
+  .navbar-brand{
+  	float: left;
+  	min-height: 55px;
+  	padding: 0 15px 5px;
+  }
+
+  .navbar-inverse .navbar-nav .active a, .navbar-inverse .navbar-nav .active a:focus,
+  .navbar-inverse .navbar-nav .active a:hover{
+  	color: #FFF;
+  	background-color: #5E4485;
+  }
+
+  .navbar-inverse .navbar li a{
+  	color: #D5D5D5;
+  }
+
+  .carousel-caption{
+  	top: 50;
+  	transform: translateY(-50%); 
+  	text-transform: uppercase;
+  }
+
+  .btn{
+  	font-size: 18px;
+  	color: #FFF;
+  	padding: 12px 22px;
+  	background: #5E4485;
+  	border:2px solid #FFF;
+  }
+
+  .container{
+  	margin: 4% auto;
+  }
+
+  #homeicon{
+  	max-height: 100px;
+  	max-width: 100%;
+  }
+
+
+
+  #icon{
+  	height: 200px;
+  	max-width: 250px;
+  	margin: 1% auto;
+  }
+
+  #slid{
+  	width: 100%;
+  	height: 680px;
+  	object-fit: cover;
+  	object-position: center;
+  }
+
+  #cart{
+  	font-size: 35px;
+  	
+  }
+
+  footer{
+  	width: 100%;
+  	background-color: #5E4485;
+  	padding: 5%;
+  	color: #FFF;
+  }
+
+  .fa{
+  	padding: 15px;
+  	font-size: 25px;
+  	color: #FFF;
+  }
+
+  .fa:hover{
+  	color: #D5D5D5;
+  	text-decoration: none;
+  }
+
+  @media(max-width: 900px){
+  	.fa{
+  		font-size: 20px;
+  		padding: 10px;
+  	}
+  }
+
+
+  @media (max-width: 600px){
+  	.carousel-caption{
+  		display: none;
+  	}
+	#icon {
+  		max-width: 200px;
+  		max-height: 150px;
+  	}
+	h2{
+  		font-size: 1.7em;
+  	}
+  	#homeicon{
+  		max-height: 45px;
+  	}
+  }
+
+#textwhite{
+color:white;
+}
+
+#colordiff{
+background-color:  #543d76;
+padding:10px;
+width:100%;
+}
+
+#padd{
+padding-top:10px;
+}
+
+
+    </style>
+
+</head>
+
+<body>
+{% load static %}
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home/"><img src="{% static 'img/w3newbie.png' %}"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                {% if isAuth %}
+                <li><a href="/accounts/profile/">{{ isAuth }}</a></li>
+                {% endif %}
+                <li class="active"><a href="/home/">Home</a></li>
+                <li><a href="/gallery/">Gallery</a></li>
+                <li><a href="/store/">Store</a></li>
+                <li><a href="/contact/">Contact</a></li>
+                {% if isAuth %}
+                <li><a href="/accounts/logout/">Logout</a></li>
+                {% else %}
+                <li><a href="/accounts/login/">Login</a></li>
+                {% endif %}
+                <li><a href="/cart/" class="fa fa-shopping-cart" id="cart" aria-hidden="true"></a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+<div id="myCarousel" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
+        <li data-target="#myCarousel" data-slide-to="1"></li>
+        <li data-target="#myCarousel" data-slide-to="2"></li>
+    </ol>
+
+    <div class="carousel-inner" role="listbox">
+        <div class="item active">
+            <img src="{% static 'pics/sparkles.jpeg' %}" class="img-responsive" id="slid">
+            <div class="carousel-caption">
+                <h1>get to know us</h1>
+                <br>
+                <button type="button" class="btn btn-default">Get Started</button>
+            </div>
+        </div> <!--End Active-->
+
+        <div class="item">
+            <img src="{% static 'pics/planner.jpeg' %}" class="img-responsive" id="slid">
+        </div><!--end second-->
+
+        <div class="item">
+            <img src="{% static 'pics/food1.jpg' %}" class="img-responsive" id="slid">
+        </div><!--end third-->
+    </div>
+    <!--start slider controls-->
+    <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+    <!--end of slider control-->
+</div> <!--end of slider-->
+
+<div class="container text-center">
+    <h2>What We Do</h2>
+    <div class="row">
+        <div class="col-sm-4">
+            <img src="{% static 'imgs/check2.png' %}" id="icon">
+            <h4><a href="#hidden1" data-toggle="collapse">Event Planning</a></h4>
+            <div id="hidden1" class="collapse">
+                <p>
+                    Meetings, parties and ceremonies bring people together, and meeting and we ensure that this purpose is
+                    achieved seamlessly. We coordinate every
+                    detail of meetings and conventions, from the speakers and lightings to catering and tents we take
+                    care of everything.
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <img src="{% static 'imgs/food.png' %}" id="icon">
+            <h4><a href="#hidden2" data-toggle="collapse">Caterering</a></h4>
+            <div id="hidden2" class="collapse">
+                <p>
+                    Looking for a perfect food affair to complement your special occasion?<br>
+                    Look no further! We provide a sumptuous food itinerary to fulfill your
+                    catering need. Be it a large, mid or small sized event, our full-range of outdoor and indoor
+                    catering services cover complete food preparation and presentation for formal and informal
+                    gatherings.
+                </p>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <img src="{% static 'imgs/lease.png' %}" id="icon">
+            <h4><a href="#hidden3" data-toggle="collapse">Lease</a></h4>
+            <div id="hidden3" class="collapse">
+                <p>
+                    We offer a great range of tent rental service, wedding tent rental service, lighting decoration and theme
+                    party tent rental services.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-6">
+            <h2>About Us</h2>
+            <p>
+                We’ve been around for more than 50 years and counting. A lot has changed in all that time,
+                we’ve grown in size and in scale. We have extended our services beyond Dhanbad to many other cites and looking forward for
+                more. But there are a lot of things that haven’t changed, like our commitment to making our stores better every day
+                for our Associates, customers and the community.
+            </p>
+            <p>
+                From 1967 to present, we have served in thousands of parties, meetings and functions ranging from birthday parties to big concerts.
+            </p>
+        </div>
+        <div class="col-md-6"><img src="{% static 'capture/img1.jpeg' %}" class="img-responsive"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <h4>Our History</h4>
+            <p>
+                We has been around for more than 50 years. We started small, back in 1967 established by Late Shri Raj Mangal Singh and
+                Shri Nain Ranjan Das. With years of hard work and commitment towards our customer we have become a renowned decorator house.
+            </p>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <img src="{% static 'capture/img2.jpg' %}" class="img-responsive">
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <h4>A Legacy of Diversity</h4>
+            <p>
+                We’re here in your neighborhood, and draw upon your rich culture to make our stores better. We’ve also
+                made it a point to ensure that our suppliers are representative of the communities we serve. We offer a diverse range of
+                services and product to match the need of each customer.
+            </p>
+        </div>
+
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+            <img src="{% static 'capture/img3.jpg' %}" class="img-responsive">
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="row">
+        <h4><a href="#hidden" data-toggle="collapse">Care to learn more about Us?</a></h4>
+        <div id="hidden" class="collapse">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+                dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
+                ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
+                fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia
+                deserunt mollit anim id est laborum.
+            </p>
+        </div>
+    </div>
+</div>
+
+<footer class="container-fluid text-center">
+    <div class="row">
+        <div class="col-sm-4">
+            <h3>Contat Us</h3>
+            <br>
+            <h4>Raj Ranjan Decorators</h4>
+        </div>
+
+        <div class="col-sm-4">
+            <h3>Connect</h3>
+            <a href="#" class="fa fa-facebook"></a>
+            <a href="#" class="fa fa-twitter"></a>
+            <a href="#" class="fa fa-google"></a>
+            <a href="#" class="fa fa-linkedin"></a>
+            <a href="#" class="fa fa-youtube"></a>
+            <br>
+        </div>
+
+        <div class="col-sm-4">
+            <!--img src="icons/home1.png" class="icon"-->
+            <a href="#"><img src="{% static 'icons/home1.png' %}" id="homeicon"></a>
+        </div>
+
+    </div>
+
+
+    <div class="footer-copyright" id="colordiff">
+        <div class="containter-fluid">
+            Dedicated to Late Shri Raj Mangal Singh & Shri Nain Ranjan Das...
+        </div>
+    </div>
+
+    <!--Copyright-->
+    <div class="footer-copyright" id="padd">
+        <div class="containter-fluid">
+            © 2017 Copyright: <a href="https://www.facebook.com/vishal.shivam.5" id="textwhite" >Vishal Shivam </a>
+        </div>
+    </div>
+    <!--/.Copyright-->
+</footer>
+
+</body>
+</html>

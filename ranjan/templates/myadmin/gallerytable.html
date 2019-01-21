@@ -1,0 +1,213 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AddProduct</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+<style>
+      p{
+  	color: #605E5E;
+  }
+
+  h3{
+  	padding: 5px;
+  }
+
+  .fa{
+  	padding: 10px;
+  	font-size: 40px;
+  	color: #FFF;
+  	margin-right: 10px;
+  	margin-left: 10px;
+  }
+
+  .fa:hover{
+  	color: #D5D5D5;
+  	text-decoration: none;
+  }
+
+  .gal {
+     -webkit-column-count: 3; /* Chrome, Safari, Opera */
+     -moz-column-count: 3; /* Firefox */
+     column-count: 3;
+     }
+
+  .gal img{ width: 100%; padding: 7px 0;}
+
+  @media (max-width: 600px) {
+    .gal {
+      -webkit-column-count: 1; /* Chrome, Safari, Opera */
+      -moz-column-count: 1; /* Firefox */
+      column-count: 1;
+    }
+  }
+
+  @media(max-width: 900px){
+  	.fa{
+  		font-size: 20px;
+  		padding: 5px;
+  		margin-left: 0px;
+  		margin-right: 0px;
+  	}
+  }
+
+
+  @media (max-width: 600px){
+
+	#icon {
+  		max-width: 200px;
+  		max-height: 150px;
+  	}
+	h2{
+  		font-size: 1.7em;
+  	}
+  	#homeicon{
+  		max-height: 45px;
+  	}
+  }
+
+  #thumb{
+    padding-right:4px;
+    margin-right: 10px;
+  }
+
+  #ads{
+    margin:3px;
+  }
+
+</style>
+</head>
+<body>
+<header>
+    <!-- Nav tabs -->
+    <nav class="navbar">
+        <div class="container-fluid">
+            <h3 align="center">ADMIN ({{ isAuth }})</h3>
+            <ul class="nav nav-tabs|pills" id="navId">
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Products</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/myadmin/addproduct/">Add</a>
+                        <a class="dropdown-item" href="/myadmin/updateproduct/">Update</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Gallery</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/myadmin/addgalleryimg/">Add</a>
+                        <a class="dropdown-item" href="/myadmin/updateproduct/">Remove</a>
+                    </div>
+                </li>
+
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                       aria-haspopup="true"
+                       aria-expanded="false">Tables</a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="/myadmin/stafftable/">Staff</a>
+                        <a class="dropdown-item" href="/myadmin/customertable/">Customer</a>
+                        <a class="dropdown-item" href="/myadmin/productstable/">Products</a>
+                        <a class="dropdown-item" href="/myadmin/gallerytable/">Gallery</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a href='/myadmin/adminlogout/' class="nav-link">Logout</a>
+                </li>
+
+            </ul>
+
+        </div>
+    </nav>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="tab1Id" role="tabpanel"></div>
+        <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
+        <div class="tab-pane fade" id="tab3Id" role="tabpanel"></div>
+        <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
+        <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
+    </div>
+
+    <script>
+    	$('#navId a').click(e => {
+    		e.preventDefault();
+    		$(this).tab('show');
+    	});
+
+
+
+
+
+    </script>
+</header>
+
+<div class="container">
+    <h3>Gallery Table</h3>
+    {% if success %}
+    <div class="alert alert-danger" role="alert">
+        <strong>Item deleted!!</strong>
+    </div>
+    {% endif %}
+    <div class="col-sm-12 col-md-12">
+        <table class="table table-hover">
+            <thead>
+            <tr>
+                <th>Image</th>
+                <th class="text-center">Title</th>
+                <th class="text-center">Filename</th>
+                <th> </th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for row in data %}
+            <tr>
+                <td class="col-md-3">
+                    <div class="media">
+                        <a class="thumbnail pull-left" href="#" id="thumb"> <img class="media-object img-responsive"
+                                                                                 src="/media/{{row.2}}"
+                                                                                 style="width: 72px; height: 72px;">
+                        </a>
+                        <div class="media-body">
+                            <h4 class="media-heading">{{ row.0 }}</h4>
+
+                        </div>
+                    </div>
+                </td>
+                <td class="col-sm-1 col-md-1 text-center">{{row.1}}</td>
+                <td class="col-sm-1 col-md-1 text-center">{{row.2}}</td>
+
+                <td class="col-sm-1 col-md-1">
+
+
+                    <a href="/myadmin/delgalleryimg/{{row.0}}" type="button" class="btn btn-danger">
+                        <span class="glyphicon glyphicon-remove"></span>Remove</a>
+
+
+                </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+</body>
+</html>

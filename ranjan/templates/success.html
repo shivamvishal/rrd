@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Payment</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+          integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+    <script src= "https://test.payumoney.com/Api/REST/op/buttonScript" async="true" ></script>
+
+    <style>
+        #tick{
+            max-height: 200px;
+            max-width: 200px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-12">
+                <br><br>
+
+
+                <h3>Amount to be paid: ₹ {{cost}} </h3>
+                <br>
+                <p style="font-size:20px;color:#5C5C5C;">Make payment with payu...</p>
+
+                <span class='pm-button' id='8447F4D067990F2EB839B0DE6CFB5E3C' onclick="window.PUM.pay()">
+  <span class="state active">
+    <input type="image" src="https://testfile.payumoney.com/images/payby_payumoney/new_buttons/21.png" width="131"
+           height="37">
+  </span>
+  <span class="state clicked" style="display:none">
+    <input type="image" src="https://testfile.payumoney.com/images/payby_payumoney/new_buttons/submitted/21.png"
+           width="131" height="37">
+  </span>
+</span>
+
+                <br><br>
+            </div>
+
+        </div>
+    </div>
+
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.4.0/js/tether.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/js/bootstrap.min.js"
+        integrity="sha384-vBWWzlZJ8ea9aCX4pEW3rVHjgjt7zpkNpZk+02D9phzyeVkE+jo0ieGizqPLForn"
+        crossorigin="anonymous"></script>
+
+    <script>
+$(document).ready(function(){
+    $("#8447F4D067990F2EB839B0DE6CFB5E3C").click(function(){
+            console.log("clicked","{{cost}}");
+          window.PUM.setData({{cost}}, "TXN15075058","decorations");
+          window.PUM.pay();
+    });
+});
+</script>
+
+</body>
+</html>

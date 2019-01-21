@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Cart</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+    <style>
+  .navbar{
+  	margin-bottom: 0;
+  	border-radius: 0;
+  	background-color: #5E4485;
+  	color: #FFF;
+  	padding: 1% 0;
+  	font-size: 1.2em;
+  	border: 0;
+  }
+
+  .navbar-brand{
+  	float: left;
+  	min-height: 55px;
+  	padding: 0 15px 5px;
+  }
+
+  .navbar-inverse .navbar-nav .active a, .navbar-inverse .navbar-nav .active a:focus,
+  .navbar-inverse .navbar-nav .active a:hover{
+  	color: #FFF;
+  	background-color: #5E4485;
+  }
+
+  .navbar-inverse .navbar li a{
+  	color: #D5D5D5;
+  }
+
+  
+
+
+
+  #butn{
+    font-size: 18px;
+    color: #FFF;
+    padding: 12px 22px;
+    background: #5E4485;
+    border:2px solid #FFF;
+  }
+
+  .container{
+  	margin: 4% auto;
+  }
+
+  #homeicon{
+  	max-height: 100px;
+  	max-width: 100%;
+  }
+
+#cart{
+    font-size: 35px;
+    margin-right: 0px;
+    margin-left: 0px;
+  }
+
+  #icon{
+  	height: 200px;
+  	max-width: 250px;
+  	margin: 1% auto;
+  }
+
+ 
+
+  footer{
+  	width: 100%;
+  	background-color: #5E4485;
+  	padding: 3%;
+  	color: #FFF;
+  }
+
+  p{
+  	color: #605E5E;
+  }
+
+  h3{
+  	padding: 5px;
+  }
+
+  .fa{
+  	padding: 10px;
+  	font-size: 40px;
+  	color: #FFF;
+  	margin-right: 10px;
+  	margin-left: 10px;
+  }
+
+  .fa:hover{
+  	color: #D5D5D5;
+  	text-decoration: none;
+  }
+
+  .gal {
+     -webkit-column-count: 3; /* Chrome, Safari, Opera */
+     -moz-column-count: 3; /* Firefox */
+     column-count: 3;
+     } 
+
+  .gal img{ width: 100%; padding: 7px 0;}
+
+  @media (max-width: 600px) {
+    .gal {
+      -webkit-column-count: 1; /* Chrome, Safari, Opera */
+      -moz-column-count: 1; /* Firefox */
+      column-count: 1;
+    }
+  }
+
+  @media(max-width: 900px){
+  	.fa{
+  		font-size: 20px;
+  		padding: 5px;
+  		margin-left: 0px;
+  		margin-right: 0px;
+  	}
+  }
+
+
+  @media (max-width: 600px){
+  	
+	#icon {
+  		max-width: 200px;
+  		max-height: 150px;
+  	}
+	h2{
+  		font-size: 1.7em;
+  	}
+  	#homeicon{
+  		max-height: 45px;
+  	}
+  }
+
+  #thumb{
+    padding-right:4px; 
+    margin-right: 10px;
+  }
+
+  #ads{
+    margin:3px;
+  }
+  #textwhite{
+color:white;
+}
+
+
+    </style>
+
+
+</head>
+
+<body>
+{% load static %}
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="/home/"><img src="{% static 'img/w3newbie.png' %}"></a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="myNavbar">
+            <ul class="nav navbar-nav navbar-right">
+                {% if isAuth %}
+                <li><a href="/accounts/profile/">{{ isAuth }}</a></li>
+                {% endif %}
+                <li><a href="/home/">Home</a></li>
+                <li><a href="/gallery/">Gallery</a></li>
+                <li><a href="/store/">Store</a></li>
+                <li><a href="/contact/">Contact</a></li>
+                {% if isAuth %}
+                <li><a href="/accounts/logout/">Logout</a></li>
+                {% else %}
+                <li><a href="/accounts/login/">Login</a></li>
+                {% endif %}
+                <li class="active"><a href="/cart/" class="fa fa-shopping-cart" id="cart" aria-hidden="true"></a></li>
+            </ul>
+
+        </div>
+    </div>
+</nav>
+
+
+<!--start-->
+<div class="container">
+    <div class="row">
+        <div class="col-sm-12 col-md-12">
+            <table class="table table-hover">
+                <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Quantity</th>
+                    <th class="text-center">From</th>
+                    <th class="text-center">To</th>
+                    <th class="text-center">Price</th>
+                    <th class="text-center">Total</th>
+                    <th> </th>
+                </tr>
+                </thead>
+                <tbody>
+
+                {% if empty %}
+                <tr>
+                    <td colspan="3"><h3>Your Cart is empty...</h3></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif%}
+
+                {% for item in zip %}
+                <!--start item -->
+                <tr>
+                    <td class="col-sm-4 col-md-3">
+                        <div class="media">
+                            <a class="thumbnail pull-left" href="#" id="thumb"> <img class="media-object img-responsive"
+                                                                                     src="/media/media/{{ item.0.6 }}"
+                                                                                     style="width: 72px; height: 72px;">
+                            </a>
+                            <div class="media-body">
+                                <h4 class="media-heading"><a href="#">{{ item.0.5|title }}</a></h4>
+                                <span>ID: </span><span class="text-success"><strong>{{item.0.1}}</strong></span>
+                            </div>
+                        </div>
+                    </td>
+
+                    <td class="col-sm-1 col-md-1" style="text-align: center">
+                        <input type="text" class="form-control" id="exampleInputEmail1" value="{{item.0.4}}">
+                    </td>
+
+                    <td class="col-sm-1 col-md-1 text-center"><strong>{{item.0.2}}</strong></td> <!--date-->
+                    <td class="col-sm-1 col-md-1 text-center"><strong>{{item.0.3}}</strong></td> <!--date-->
+                    <td class="col-sm-1 col-md-1 text-center"><strong>₹ {{item.0.7}}{% if empty %}0{% endif%}</strong>
+                    </td> <!--price-->
+                    <td class="col-sm-1 col-md-1 text-center"><strong>₹ {{item.1}} {% if empty %}0{% endif%}</strong>
+                    </td> <!--total-->
+                    <td class="col-sm-1 col-md-1">
+                        <a href="remove/{{item.0.0}}+{{item.0.1}}+{{item.2}}+{{item.3}}" type="button"
+                           class="btn btn-danger">
+                            <span class="glyphicon glyphicon-remove"></span> Remove</a>
+                    </td>
+                </tr>
+                <!-- end item -->
+                {% endfor %}
+                <tr>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td colspan="2"><h5>Subtotal</h5></td>
+                    <td class="text-right"><h5><strong>₹ {{subtotal}}{% if empty %}0{% endif%}</strong></h5></td>
+                </tr>
+                <tr>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+
+                    <td colspan="2"><h5>Estimated shipping</h5></td>
+                    <td class="text-right"><h5><strong>₹ {{shipping}}{% if empty %}0{% endif%}</strong></h5></td>
+                </tr>
+                <tr>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td>  </td>
+                    <td colspan="2"><h3>Total</h3></td>
+                    <td class="text-right"><h3><strong>₹ {{finalcost}}{% if empty %}0{% endif%}</strong></h3></td>
+                </tr>
+                <tr>
+                    <form data-toggle="validator" role="form" method="POST">
+                        <td> {% if not empty %}
+
+
+                            <div class="form-group">
+                                <label for="inputName" class="control-label">Delivery Address:</label>
+                                <input type="text" hidden value="{{finalcost}}" name="ficost">
+                                <input type="text" class="form-control" id="inputName" name="locality"
+                                       placeholder="House No. / Street" required>
+                                <input type="text" class="form-control" id="inputName" name="city" placeholder="City"
+                                       required>
+                                <input type="text" class="form-control" id="inputName" name="pincode"
+                                       placeholder="Pincode" required>
+                            </div>
+
+                            {% endif %}
+                        </td>
+
+                        <td>  </td>
+                        <td>  </td>
+                        <td>  </td>
+
+                        <td colspan="2">
+                            <a href="/store/" class="btn btn-primary"><span
+                                    class="glyphicon glyphicon-shopping-cart"></span> Continue Shopping</a>
+                        </td>
+                        <td>{% if not empty %}
+                            <div class="form-group">
+                                <button type="submit" class="btn btn-success" >
+                                    Checkout <span class="glyphicon glyphicon-play"></span>
+                                </button>
+                            </div>
+
+
+                            {% endif%}
+                        </td>
+                    </form>
+
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+<!--end-->
+
+
+<footer class="container-fluid text-center">
+    <div class="row">
+        <div class="col-sm-2">
+            <!--h3>Contat Us</h3>
+            <br>
+            <h4>Our address and contact info here.</h4-->
+        </div>
+
+        <div class="col-sm-8">
+            <!--h3>Connect</h3-->
+            <a href="#" class="fa fa-facebook"></a>
+            <a href="#" class="fa fa-twitter"></a>
+            <a href="#" class="fa fa-google"></a>
+            <a href="#" class="fa fa-linkedin"></a>
+            <a href="#" class="fa fa-youtube"></a>
+            <br>
+        </div>
+
+        <div class="col-sm-2">
+            <!--img src="icons/home1.png" class="icon">
+            <a href="#"><img src="icons/home1.png" id="homeicon"></a-->
+        </div>
+
+    </div>
+    <!--Copyright-->
+    <div class="footer-copyright">
+        <div class="containter-fluid">
+            © 2017 Copyright: <a href="https://www.facebook.com/vishal.shivam.5" id="textwhite"> Vishal Shivam </a>
+        </div>
+    </div>
+    <!--/.Copyright-->
+</footer>
+
+</body>
+</html>
